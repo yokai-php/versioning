@@ -1,6 +1,8 @@
 Yokai Versioning
 ================
 
+[![Build Status](https://travis-ci.org/yokai-php/versioning.svg?branch=master)](https://travis-ci.org/yokai-php/versioning)
+
 todo badges
 
 Introduction
