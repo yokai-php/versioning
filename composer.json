@@ -1,0 +1,54 @@
+{
+  "name": "yokai/versioning",
+  "description": "Domain model versioning",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yann Eugoné",
+      "email": "eugone.yann@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "doctrine/orm": "^2.5",
+    "infection/infection": "^0.8.1",
+    "phpunit/phpunit": "^7.0",
+    "symfony/console": "^3.4|^4.0",
+    "symfony/event-dispatcher": "^3.4|^4.0",
+    "symfony/framework-bundle": "^3.4|^4.0",
+    "symfony/http-kernel": "^3.4|^4.0",
+    "symfony/security": "^3.4|^4.0",
+    "symfony/serializer": "^3.4|^4.0"
+  },
+  "suggest": {
+    "doctrine/orm": "Store version using an ORM entity / Take normalized snapshots of ORM entities (requires symfony/serializer)",
+    "symfony/console": "Commands to manipulate versions / Initialize versioning context using command event (requires symfony/event-dispatcher)",
+    "symfony/event-dispatcher": "Initialize versioning context using an event listener",
+    "symfony/framework-bundle": "Integration in Symfony framework",
+    "symfony/http-kernel": "Initialize versioning context using http event (requires symfony/event-dispatcher)",
+    "symfony/security": "Initialize versioning author using token storage (requires symfony/http & symfony/event-dispatcher)",
+    "symfony/serializer": "Take snapshot of domain models using normalization"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yokai\\Versioning\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Yokai\\Versioning\\Tests\\": "tests"
+    }
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  }
+}
