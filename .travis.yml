@@ -1,0 +1,28 @@
+language: php
+
+php:
+  - 7.2
+
+env:
+  - SYMFONY_VERSION="3.4.*"
+  - SYMFONY_VERSION="4.0.*"
+  - SYMFONY_VERSION="4.1.x-dev"
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - composer selfupdate
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
+
+install: composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
+
+script:
+  - vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage/clover.xml
+  - vendor/bin/infection --test-framework-options="--testsuite=unit" --show-mutations
+
+notifications:
+  email: eugone.yann@gmail.com
