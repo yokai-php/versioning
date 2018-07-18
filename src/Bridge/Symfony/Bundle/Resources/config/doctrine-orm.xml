@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="false"/>
+
+        <service id="yokai.versioning.doctrine.orm.event_listener.create_version"
+                class="Yokai\Versioning\Bridge\Doctrine\ORM\EventListener\CreateVersionListener">
+            <argument type="service" id="yokai.versioning.update_guesser"/>
+            <argument type="service" id="yokai.versioning.version_builder"/>
+            <argument type="service" id="yokai.versioning.version_storage"/>
+        </service>
+
+        <service id="yokai.versioning.doctrine.orm.initialize_entity_finder"
+                class="Yokai\Versioning\Bridge\Doctrine\ORM\Initialize\EntityFinder">
+            <argument type="service" id="doctrine"/>
+        </service>
+
+        <service id="yokai.versioning.doctrine.orm.purger.obsolete"
+                class="Yokai\Versioning\Bridge\Doctrine\ORM\Purge\ObsoletePurger">
+            <argument type="service" id="doctrine"/>
+        </service>
+
+        <service id="yokai.versioning.doctrine.orm.purger.old"
+                class="Yokai\Versioning\Bridge\Doctrine\ORM\Purge\OldPurger">
+            <argument type="service" id="doctrine"/>
+            <argument/><!-- replaced with config -->
+        </service>
+
+        <service id="yokai.versioning.doctrine.orm.author_storage"
+                class="Yokai\Versioning\Bridge\Doctrine\ORM\Storage\AuthorEntityStorage">
+            <argument type="service" id="doctrine"/>
+        </service>
+
+        <service id="yokai.versioning.doctrine.orm.version_storage"
+                class="Yokai\Versioning\Bridge\Doctrine\ORM\Storage\VersionEntityStorage">
+            <argument type="service" id="doctrine"/>
+        </service>
+
+        <service id="yokai.versioning.doctrine.orm.version_factory"
+                class="Yokai\Versioning\Bridge\Doctrine\ORM\VersionEntityFactory"/>
+    </services>
+</container>

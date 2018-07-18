@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="Yokai\Versioning\Bridge\Doctrine\ORM\Entity\Version" table="yokai_version">
+        <id name="id" type="integer">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <unique-constraints>
+            <unique-constraint columns="resource_type,resource_id,version"/>
+        </unique-constraints>
+        <indexes>
+            <index columns="version"/>
+            <index columns="resource_type,resource_id"/>
+            <index columns="author_type,author_id"/>
+            <index columns="context_entry_point"/>
+            <index columns="logged_at"/>
+        </indexes>
+        <field name="resourceType" column="resource_type" type="string" nullable="false"/>
+        <field name="resourceId" column="resource_id" type="string" nullable="false"/>
+        <field name="version" column="version" type="integer" nullable="false"/>
+        <field name="snapshot" column="snapshot" type="json" nullable="false"/>
+        <field name="changeset" column="changeset" type="json" nullable="false"/>
+        <field name="authorType" column="author_type" type="string" nullable="true"/>
+        <field name="authorId" column="author_id" type="string" nullable="true"/>
+        <field name="contextEntryPoint" column="context_entry_point" type="string" nullable="true"/>
+        <field name="contextParameters" column="context_parameters" type="json" nullable="false"/>
+        <field name="loggedAt" column="logged_at" type="datetimetz_immutable" nullable="false"/>
+    </entity>
+</doctrine-mapping>
