@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="false"/>
+
+        <service id="yokai.versioning.version_storage" class="Yokai\Versioning\Storage\VersionStorageInterface"/>
+        <service id="yokai.versioning.snapshot_taker" class="Yokai\Versioning\SnapshotTakerInterface"/>
+        <service id="yokai.versioning.version_factory" class="Yokai\Versioning\VersionFactoryInterface"/>
+
+        <service id="yokai.versioning.author_finder"
+                 class="Yokai\Versioning\Finder\AuthorFinder">
+            <argument type="service" id="yokai.versioning.types_config"/>
+            <argument type="service" id="yokai.versioning.author_storage"/>
+        </service>
+
+        <service id="yokai.versioning.version_finder"
+                 class="Yokai\Versioning\Finder\VersionFinder">
+            <argument type="service" id="yokai.versioning.types_config"/>
+            <argument type="service" id="yokai.versioning.version_storage"/>
+        </service>
+
+        <service id="yokai.versioning.initializer"
+                 class="Yokai\Versioning\Initialize\Initializer">
+            <argument type="service" id="yokai.versioning.initializer.object_finder"/>
+            <argument type="service" id="yokai.versioning.update_guesser"/>
+            <argument type="service" id="yokai.versioning.version_builder"/>
+            <argument type="service" id="yokai.versioning.version_storage"/>
+        </service>
+
+        <service id="yokai.versioning.initializer.object_finder"
+                 class="Yokai\Versioning\Initialize\ChainObjectFinder">
+            <argument type="tagged" tag="yokai.versioning.initialize.object_finder"/>
+        </service>
+
+        <service id="yokai.versioning.purger"
+                 class="Yokai\Versioning\Purge\ChainPurger">
+            <argument type="tagged" tag="yokai.versioning.purger"/>
+        </service>
+
+        <service id="yokai.versioning.author_storage"
+                 class="Yokai\Versioning\Storage\ChainAuthorStorage">
+            <argument type="tagged" tag="yokai.versioning.author_storage"/>
+        </service>
+
+        <service id="yokai.versioning.update_guesser"
+                 class="Yokai\Versioning\UpdateGuesser\ChainUpdateGuesser">
+            <argument type="tagged" tag="yokai.versioning.update_guesser"/>
+        </service>
+
+        <service id="yokai.versioning.changeset_builder"
+                 class="Yokai\Versioning\ChangesetBuilder"/>
+
+        <service id="yokai.versioning.context"
+                 class="Yokai\Versioning\Context"/>
+
+        <service id="yokai.versioning.types_config"
+                 class="Yokai\Versioning\TypesConfig">
+            <argument type="collection"/><!-- replaced with config -->
+            <argument type="collection"/><!-- replaced with config -->
+        </service>
+
+        <service id="yokai.versioning.version_builder"
+                 class="Yokai\Versioning\VersionBuilder">
+            <argument type="service" id="yokai.versioning.types_config"/>
+            <argument type="service" id="yokai.versioning.version_storage"/>
+            <argument type="service" id="yokai.versioning.snapshot_taker"/>
+            <argument type="service" id="yokai.versioning.changeset_builder"/>
+            <argument type="service" id="yokai.versioning.context"/>
+            <argument type="service" id="yokai.versioning.version_factory"/>
+        </service>
+    </services>
+</container>
